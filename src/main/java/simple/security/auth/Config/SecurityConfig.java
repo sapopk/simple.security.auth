@@ -40,9 +40,9 @@ public class SecurityConfig {
     @Bean
     CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncode){
         return args ->{
-            if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
-            RoleEntity adminRole = roleRepository.save(new RoleEntity("ADMIN"));
-            roleRepository.save(new RoleEntity("USER"));
+            if(roleRepository.findByAuthority("ROLE_ADMIN").isPresent()) return;
+            RoleEntity adminRole = roleRepository.save(new RoleEntity("ROLE_ADMIN"));
+            roleRepository.save(new RoleEntity("ROLE_USER"));
 
             Set<RoleEntity> roles = new HashSet<>();
             roles.add(adminRole);
@@ -69,8 +69,10 @@ public class SecurityConfig {
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
                 .authorizeHttpRequests(auth -> {
-                            auth.requestMatchers("/admin/**", "/user/**").authenticated();
                             auth.requestMatchers("/auth/**").permitAll();
+                            auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                            auth.requestMatchers("/user/**").hasAnyRole("USER");
+                            auth.anyRequest().authenticated();
                         }
                 );
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));

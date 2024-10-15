@@ -41,7 +41,7 @@ public class AuthenticationService implements AuthenticationProvider {
 
     public UserEntity registerUser(UserApp body) {
         String hashedPassword = passwordEncoder.encode(body.getPassword());
-        RoleEntity role = roleRepository.findByAuthority("USER").get();
+        RoleEntity role = roleRepository.findByAuthority("ROLE_USER").get();
 
         Set<RoleEntity> authority = new HashSet<>();
         authority.add(role);

@@ -1,10 +1,17 @@
 package simple.security.auth.Entity;
 
-import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
