@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: simple.security.auth
+  config:
+    import: optional:classpath:config/mysql.properties
+  jpa:
+    show-sql: TRUE
+    properties.hibernate.format_sql: TRUE
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration: OFF
+  pattern:
+    console: ${CONSOLE_COMMANDS}
